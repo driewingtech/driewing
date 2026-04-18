@@ -1,0 +1,345 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* Colors */
+  --bg-color:        #0b0f19;
+  --bg-color-alt:    #111827;
+  --text-primary:    #ffffff;
+  --text-secondary:  #9ca3af;
+  --accent-primary:  #00f0ff;
+  --accent-secondary: #8a2be2;
+  --green-status:    #00ff88;
+
+  /* Typography */
+  --font-main:    'Inter', 'Outfit', sans-serif;
+  --font-display: 'Outfit', 'Inter', sans-serif;
+
+  /* Spacing scale */
+  --section-padding-lg: 120px;
+  --section-padding-md: 80px;
+  --section-padding-sm: 60px;
+
+  /* Borders & Radii */
+  --border-radius-xl: 40px;
+  --border-radius-lg: 32px;
+  --border-radius-md: 24px;
+  --border-radius-sm: 16px;
+  --pill-radius:      999px;
+
+  /* Shadows */
+  --shadow-soft:  0 4px 20px rgba(0, 0, 0, 0.4);
+  --shadow-hover: 0 10px 30px rgba(0, 240, 255, 0.12);
+  --shadow-card:  0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+
+  /* Borders */
+  --border-default: 1px solid rgba(255, 255, 255, 0.07);
+  --border-accent:  1px solid rgba(0, 240, 255, 0.25);
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-image:
+    radial-gradient(circle at top, rgba(0, 240, 255, 0.08), transparent 28%),
+    radial-gradient(circle at 85% 20%, rgba(138, 43, 226, 0.08), transparent 24%),
+    linear-gradient(180deg, #09111d 0%, #0b0f19 32%, #0b0f19 100%);
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+section {
+  content-visibility: auto;
+  contain-intrinsic-size: 800px;
+}
+
+#hero {
+  content-visibility: visible;
+  contain-intrinsic-size: auto;
+}
+
+/* ============================================================
+   LAYOUT UTILITIES
+   ============================================================ */
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 1.25rem; }
+}
+
+.section-wrapper {
+  padding: var(--section-padding-lg) 0;
+}
+
+.section-skeleton {
+  padding: var(--section-padding-md) 0;
+}
+
+.section-skeleton-card {
+  min-height: 320px;
+  border-radius: var(--border-radius-lg);
+  background:
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      rgba(255, 255, 255, 0.06) 50%,
+      rgba(255, 255, 255, 0.03) 100%
+    );
+  background-size: 200% 100%;
+  border: var(--border-default);
+  animation: skeletonShift 1.4s linear infinite;
+}
+
+@keyframes skeletonShift {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html,
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  section {
+    content-visibility: visible;
+    contain-intrinsic-size: auto;
+  }
+
+  .section-skeleton-card {
+    animation: none;
+  }
+}
+
+/* ============================================================
+   SHARED SECTION HEADERS
+   Used across: Explore, Features, Testimonials, About
+   ============================================================ */
+.portfolio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 24px;
+  margin-bottom: 48px;
+}
+
+.portfolio-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  line-height: 1.6;
+  margin-top: 8px;
+  max-width: 480px;
+}
+
+.period {
+  color: var(--accent-primary);
+}
+
+/* ============================================================
+   CARD CONTAINER (used by About section)
+   ============================================================ */
+.card-container {
+  background: var(--bg-color-alt);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 60px;
+  border: var(--border-default);
+  margin-bottom: 0;
+  transition: box-shadow 0.4s ease;
+}
+
+.card-container:hover {
+  box-shadow: 0 20px 60px rgba(0, 240, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 768px) {
+  .card-container { padding: 32px 20px; border-radius: var(--border-radius-md); }
+}
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  margin-bottom: 0;
+  line-height: 1;
+}
+
+/* ============================================================
+   TYPOGRAPHY HELPERS
+   ============================================================ */
+.heading-xl {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 1;
+}
+
+.heading-lg {
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-muted {
+  color: var(--text-secondary);
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+/* Primary CTA — gradient shimmer pill */
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 36px;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  background-size: 200% auto;
+  color: #fff;
+  font-family: var(--font-main);
+  font-weight: 700;
+  font-size: 1rem;
+  border-radius: var(--pill-radius);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 240, 255, 0.25);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary), var(--accent-primary));
+  background-size: 200% auto;
+  z-index: -1;
+  border-radius: var(--pill-radius);
+  filter: blur(12px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: shine 3s linear infinite;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(138, 43, 226, 0.45);
+}
+
+.btn-primary:hover::before {
+  opacity: 0.7;
+}
+
+/* Secondary ghost button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 30px;
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: var(--pill-radius);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  background: rgba(0, 240, 255, 0.05);
+}
+
+/* ============================================================
+   KEYFRAMES
+   ============================================================ */
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+@keyframes driftGlow {
+  0%   { transform: translate(0, 0)      scale(1);    opacity: 0.2; }
+  33%  { transform: translate(30px, -50px) scale(1.1); opacity: 0.4; }
+  66%  { transform: translate(-20px, 40px) scale(0.95); opacity: 0.3; }
+  100% { transform: translate(0, 0)      scale(1);    opacity: 0.2; }
+}
