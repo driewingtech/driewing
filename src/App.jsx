@@ -8,7 +8,9 @@ const Features = lazy(() => import("./components/Features"));
 const About = lazy(() => import("./components/About"));
 const Contact = lazy(() => import("./components/Contact"));
 const Blog = lazy(() => import("./pages/Blog"));
-const RadialOrbitalTimelineDemo = lazy(() => import("./components/RadialOrbitalTimelineDemo"));
+const RadialOrbitalTimelineDemo = lazy(
+  () => import("./components/RadialOrbitalTimelineDemo"),
+);
 
 const SectionFallback = () => (
   <div className="section-skeleton" aria-hidden="true">
@@ -23,19 +25,20 @@ function App() {
 
   const scrollToContact = () => {
     setView("home");
-    
+
     // Use a retry mechanism in case components take time to load via Suspense
     const tryScroll = (attempts = 10) => {
       const contactSection = document.getElementById("contact");
       if (contactSection) {
         const yOffset = -100; // Account for the fixed navbar height
-        const y = contactSection.getBoundingClientRect().top + window.scrollY + yOffset;
+        const y =
+          contactSection.getBoundingClientRect().top + window.scrollY + yOffset;
         window.scrollTo({ top: y, behavior: "smooth" });
       } else if (attempts > 0) {
         setTimeout(() => tryScroll(attempts - 1), 100);
       }
     };
-    
+
     setTimeout(() => tryScroll(), 50);
   };
 
@@ -43,7 +46,9 @@ function App() {
     <>
       <Navbar
         onBlogClick={() => setView("blog")}
-        onHomeClick={() => setView("home")} currentView={view} />
+        onHomeClick={() => setView("home")}
+        currentView={view}
+      />
       <main>
         <Suspense fallback={<SectionFallback />}>
           {view === "home" ? (
@@ -53,9 +58,9 @@ function App() {
               <LazySection minHeight={700}>
                 <Testimonials />
               </LazySection>
-              <LazySection minHeight={900}>
+              {/* <LazySection minHeight={900}>
                 <RadialOrbitalTimelineDemo />
-              </LazySection>
+              </LazySection> */}
               <LazySection minHeight={760}>
                 <Features />
               </LazySection>
