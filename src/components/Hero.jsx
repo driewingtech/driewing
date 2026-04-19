@@ -1,5 +1,4 @@
 import React from "react";
-import { motion } from "framer-motion";
 import { Link } from "react-scroll";
 import {
   SiAndroid,
@@ -17,20 +16,8 @@ import {
 } from "react-icons/si";
 import heroImg from "../assets/hero-agency.png";
 import Magnetic from "./Magnetic";
-import { PopupModal } from "react-calendly";
+import DeferredCalendlyModal from "./DeferredCalendlyModal";
 import "./Hero.css";
-
-const heroStats = [
-  { value: "10+", label: "projects shipped" },
-  { value: "Web + Mobile", label: "product execution" },
-  { value: "24h", label: "average response time" },
-];
-
-const engagementPoints = [
-  "Discovery and product strategy",
-  "UI/UX design that supports conversion",
-  "Fast engineering and launch support",
-];
 
 const TechLogos = () => (
   <>
@@ -82,9 +69,19 @@ const Hero = () => {
   const heroRef = React.useRef(null);
   const blobRef = React.useRef(null);
   const frameRef = React.useRef(null);
+  const enablePointerEffects = React.useRef(false);
+
+  React.useEffect(() => {
+    enablePointerEffects.current =
+      typeof window !== "undefined" &&
+      window.matchMedia("(hover: hover) and (pointer: fine)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  }, []);
 
   const handleMouseMove = (e) => {
-    if (!heroRef.current || !blobRef.current) return;
+    if (!enablePointerEffects.current || !heroRef.current || !blobRef.current) {
+      return;
+    }
 
     const bounds = heroRef.current.getBoundingClientRect();
     const nextX = e.clientX - bounds.left - 250;
@@ -137,31 +134,9 @@ const Hero = () => {
       <div className="hero-grid-bg"></div>
 
       {/* Floating Elements */}
-      <motion.div
-        className="floating-shape shape-1"
-        animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="floating-shape shape-2"
-        animate={{ y: [0, 25, 0], x: [0, -15, 0] }}
-        transition={{
-          duration: 7,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 1,
-        }}
-      />
-      <motion.div
-        className="floating-shape shape-3"
-        animate={{ y: [0, -15, 0], x: [0, 20, 0] }}
-        transition={{
-          duration: 6,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2,
-        }}
-      />
+      <div className="floating-shape shape-1" />
+      <div className="floating-shape shape-2" />
+      <div className="floating-shape shape-3" />
 
       <div
         ref={blobRef}
@@ -184,36 +159,21 @@ const Hero = () => {
             </h1>
           </div>
 
-          <motion.p
-            className="hero-description"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-          >
+          <p className="hero-description">
             We help startups, studios, and growing businesses turn rough ideas
             into polished web platforms and mobile apps that look premium,
             perform fast, and move people to act.
-          </motion.p>
+          </p>
 
-          <motion.div
-            className="service-tags"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.8 }}
-          >
+          <div className="service-tags">
             <span className="service-tag">SaaS Platforms</span>
             <span className="service-tag">Mobile Apps</span>
             <span className="service-tag">Conversion-focused Websites</span>
             <span className="service-tag">UI/UX Systems</span>
             <span className="service-tag">Launch Support</span>
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="hero-btns"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-          >
+          <div className="hero-btns">
             <Magnetic strength={0.3}>
               <button
                 className="btn-primary"
@@ -225,7 +185,7 @@ const Hero = () => {
             <Link to="portfolio" spy smooth offset={-100} duration={250}>
               <button className="btn-ghost">See Case Study</button>
             </Link>
-          </motion.div>
+          </div>
 
           {/* <motion.div
             className="hero-proof-strip"
@@ -257,12 +217,7 @@ const Hero = () => {
         </div>
 
         <div className="hero-image-side">
-          <motion.div
-            className="hero-image-wrapper"
-            initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ delay: 0.3, duration: 1, ease: "easeOut" }}
-          >
+          <div className="hero-image-wrapper">
             <div className="image-glow"></div>
             <img
               src={heroImg}
@@ -273,47 +228,24 @@ const Hero = () => {
             />
 
             {/* Decorative Elements */}
-            <motion.div
-              className="tech-badge react"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            >
+            <div className="tech-badge react">
               <SiReact color="#61DAFB" />
-            </motion.div>
-            <motion.div
-              className="tech-badge node"
-              animate={{ y: [0, 15, 0] }}
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-            >
+            </div>
+            <div className="tech-badge node">
               <SiNodedotjs color="#339933" />
-            </motion.div>
-            <motion.div
-              className="floating-insight insight-top"
-              initial={{ opacity: 0, x: 18 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.9, duration: 0.7 }}
-            >
+            </div>
+            <div className="floating-insight insight-top">
               <span>Client-ready UX</span>
               <strong>Web + Mobile</strong>
-            </motion.div>
-            <motion.div
-              className="floating-insight insight-bottom"
-              initial={{ opacity: 0, x: -18 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.1, duration: 0.7 }}
-            >
+            </div>
+            <div className="floating-insight insight-bottom">
               <div className="platform-icons">
                 <SiApple />
                 <SiAndroid />
               </div>
               <span>Built to scale from first release</span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -328,11 +260,10 @@ const Hero = () => {
         </div>
       </div>
 
-      <PopupModal
+      <DeferredCalendlyModal
         url="https://calendly.com/driewingtech"
-        onModalClose={() => setIsCalendlyOpen(false)}
-        open={isCalendlyOpen}
-        rootElement={document.getElementById("root")}
+        onClose={() => setIsCalendlyOpen(false)}
+        isOpen={isCalendlyOpen}
       />
     </section>
   );

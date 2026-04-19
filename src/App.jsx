@@ -1,6 +1,7 @@
 import React, { Suspense, lazy } from "react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
+import LazySection from "./components/LazySection";
 const Explore = lazy(() => import("./components/Explore"));
 const Testimonials = lazy(() => import("./components/Testimonials"));
 const Features = lazy(() => import("./components/Features"));
@@ -49,14 +50,24 @@ function App() {
             <>
               <Hero />
               {/* <Explore /> */}
-              <Testimonials />
-              <RadialOrbitalTimelineDemo />
-              <Features />
-              <About />
-              <Contact />
+              <LazySection minHeight={700}>
+                <Testimonials />
+              </LazySection>
+              <LazySection minHeight={900}>
+                <RadialOrbitalTimelineDemo />
+              </LazySection>
+              <LazySection minHeight={760}>
+                <Features />
+              </LazySection>
+              <LazySection minHeight={900}>
+                <About />
+              </LazySection>
+              <LazySection minHeight={900}>
+                <Contact />
+              </LazySection>
             </>
           ) : (
-            <Blog onBack={() => setView("home")} onContactClick={scrollToContact} />
+            <Blog onContactClick={scrollToContact} />
           )}
         </Suspense>
       </main>

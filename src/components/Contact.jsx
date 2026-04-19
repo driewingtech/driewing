@@ -1,5 +1,4 @@
 import React, { useRef, useState } from "react";
-import emailjs from "emailjs-com";
 import Magnetic from "./Magnetic";
 import {
   FaArrowRight,
@@ -88,34 +87,33 @@ const Contact = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const sendEmail = (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError(false);
     setIsSent(false);
 
-    emailjs
-      .sendForm(
+    try {
+      const { default: emailjs } = await import("emailjs-com");
+
+      await emailjs.sendForm(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
         formRef.current,
         EMAILJS_PUBLIC_KEY,
-      )
-      .then(
-        () => {
-          setIsSent(true);
-          setError(false);
-          setIsLoading(false);
-          setUserEmail("");
-          formRef.current.reset();
-          setTimeout(() => setIsSent(false), 5000);
-        },
-        (err) => {
-          console.error("EmailJS error:", err);
-          setError(true);
-          setIsLoading(false);
-        },
       );
+
+      setIsSent(true);
+      setError(false);
+      setIsLoading(false);
+      setUserEmail("");
+      formRef.current.reset();
+      setTimeout(() => setIsSent(false), 5000);
+    } catch (err) {
+      console.error("EmailJS error:", err);
+      setError(true);
+      setIsLoading(false);
+    }
   };
 
   return (

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
 import { Link } from "react-scroll";
 import { FaBars, FaTimes } from "react-icons/fa";
 import logoBrand from "../assets/brand_logo.png";
 import Magnetic from "./Magnetic";
-import { PopupModal } from "react-calendly";
+import DeferredCalendlyModal from "./DeferredCalendlyModal";
 import "./Navbar.css";
 
 const Navbar = ({ onBlogClick, onHomeClick, currentView }) => {
@@ -77,21 +76,7 @@ const Navbar = ({ onBlogClick, onHomeClick, currentView }) => {
           )}
         </div>
 
-        <motion.ul
-          className={click ? "nav-menu active" : "nav-menu"}
-          initial="hidden"
-          animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: {
-              opacity: 1,
-              transition: {
-                staggerChildren: 0.1,
-                delayChildren: 0.2,
-              },
-            },
-          }}
-        >
+        <ul className={click ? "nav-menu active" : "nav-menu"}>
           {[
             { to: "home", label: "Home", type: "home" },
             { to: "portfolio", label: "Work", type: "blog" },
@@ -100,14 +85,7 @@ const Navbar = ({ onBlogClick, onHomeClick, currentView }) => {
             // { to: "blog", label: "Blog", type: "blog" },
             { to: "contact", label: "Contact", type: "scroll" },
           ].map((item, index) => (
-            <motion.li
-              key={index}
-              className="nav-item"
-              variants={{
-                hidden: { opacity: 0, y: -10 },
-                visible: { opacity: 1, y: 0 },
-              }}
-            >
+            <li key={index} className="nav-item">
               {item.type === "blog" ? (
                 <span
                   onClick={() => { onBlogClick(); closeMenu(); }}
@@ -145,16 +123,11 @@ const Navbar = ({ onBlogClick, onHomeClick, currentView }) => {
                 //   </span>
                 // )
               }
-            </motion.li>
+            </li>
           ))}
-        </motion.ul>
+        </ul>
 
-        <motion.div
-          className="nav-cta hide-mobile"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.5 }}
-        >
+        <div className="nav-cta hide-mobile">
           <Magnetic strength={0.3}>
             <button
               className="btn-primary"
@@ -164,14 +137,13 @@ const Navbar = ({ onBlogClick, onHomeClick, currentView }) => {
               Book a Call
             </button>
           </Magnetic>
-        </motion.div>
+        </div>
       </div>
 
-      <PopupModal
+      <DeferredCalendlyModal
         url="https://calendly.com/driewingtech"
-        onModalClose={() => setIsCalendlyOpen(false)}
-        open={isCalendlyOpen}
-        rootElement={document.getElementById("root")}
+        onClose={() => setIsCalendlyOpen(false)}
+        isOpen={isCalendlyOpen}
       />
     </header>
   );

@@ -11,7 +11,7 @@ import {
 import { motion } from "framer-motion";
 import Magnetic from "./Magnetic";
 import "./Explore.css";
-import priyamImg from "../assets/priyam.png";
+import priyamImg from "../assets/priyam.webp";
 
 const valueProps = [
   {

@@ -1,5 +1,5 @@
 import realEstateHero from "../assets/real-estate-hero.png";
-import priyamImg from "../assets/priyam.png";
+import priyamImg from "../assets/priyam.webp";
 import nftMarketplace from "../assets/nft-marketplace.png";
 import adminDashboard from "../assets/admin-dashboard.png";
 import solanaDapp from "../assets/solana-dapp.png";

@@ -7,7 +7,7 @@ import {
   FaRocket,
 } from "react-icons/fa";
 import "./About.css";
-import aboutImg from "../assets/agency_about_bg_1775404043431.png";
+import aboutImg from "../assets/agency_about_bg_1775404043431.webp";
 
 const operatingPrinciples = [
   "Small team, direct communication, and no bloated handoffs between departments.",

@@ -13,6 +13,31 @@ export default defineConfig({
     tailwindcss(),
     react()
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes("framer-motion")) {
+            return "motion";
+          }
+
+          if (id.includes("react-icons")) {
+            return "icons";
+          }
+
+          if (id.includes("react-calendly")) {
+            return "calendly";
+          }
+
+          if (id.includes("emailjs-com")) {
+            return "emailjs";
+          }
+
+          return undefined;
+        },
+      },
+    },
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

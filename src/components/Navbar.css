@@ -86,6 +86,10 @@
   transition: color 0.2s ease;
 }
 
+.nav-cta {
+  animation: navFadeIn 0.45s ease-out both;
+}
+
 .nav-item a,
 .nav-item span {
   padding: 7px 14px;
@@ -199,4 +203,15 @@
 .calendly-popup-content::-webkit-scrollbar,
 .calendly-popup-content iframe::-webkit-scrollbar {
   display: none !important;
+}
+
+@keyframes navFadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(12px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
 }

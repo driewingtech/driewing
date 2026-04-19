@@ -49,6 +49,7 @@ export default function RadialOrbitalTimeline({
     y: 0,
   });
   const [activeNodeId, setActiveNodeId] = useState<number | null>(null);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const orbitRef = useRef<HTMLDivElement>(null);
   const nodeRefs = useRef<Record<number, HTMLDivElement | null>>({});
@@ -96,6 +97,34 @@ export default function RadialOrbitalTimeline({
   };
 
   useEffect(() => {
+    const node = containerRef.current;
+
+    if (!node) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.15 }
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) {
+      if (requestRef.current) {
+        cancelAnimationFrame(requestRef.current);
+        requestRef.current = 0;
+      }
+
+      return undefined;
+    }
+
     const updateNodes = () => {
       if (viewModeRef.current !== "orbital") return;
       
@@ -129,7 +158,7 @@ export default function RadialOrbitalTimeline({
 
     requestRef.current = requestAnimationFrame(updateNodes);
     return () => cancelAnimationFrame(requestRef.current);
-  }, [timelineData, centerOffset]);
+  }, [timelineData, centerOffset, isVisible]);
 
   const centerViewOnNode = (nodeId: number) => {
     if (viewMode !== "orbital" || !nodeRefs.current[nodeId]) return;

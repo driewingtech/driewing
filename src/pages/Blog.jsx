@@ -1,17 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaArrowLeft, FaExternalLinkAlt, FaCheckCircle, FaSearch, FaFilter } from "react-icons/fa";
+import { FaArrowLeft } from "react-icons/fa";
 import { SiReact, SiVercel, SiNodedotjs, SiMongodb, SiNextdotjs, SiEthereum, SiSolana, SiRust, SiExpress } from "react-icons/si";
 import { projects } from "../data/projects";
 import "./Blog.css";
-import Navbar from "../components/Navbar";
 
-const Blog = ({ onBack, onContactClick }) => {
+const Blog = ({ onContactClick }) => {
   const [selectedId, setSelectedId] = useState(null);
   const [filter, setFilter] = useState("All");
 
-  const categories = ["All", ...new Set(projects.map(p => p.category))];
-  const filteredProjects = filter === "All" ? projects : projects.filter(p => p.category === filter);
+  const categories = useMemo(
+    () => ["All", ...new Set(projects.map((project) => project.category))],
+    [],
+  );
+  const filteredProjects = useMemo(
+    () =>
+      filter === "All"
+        ? projects
+        : projects.filter((project) => project.category === filter),
+    [filter],
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
