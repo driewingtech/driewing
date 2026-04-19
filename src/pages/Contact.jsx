@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap';
+import { FaRegClock, FaGlobe, FaEnvelopeOpenText } from 'react-icons/fa';
 
 const Contact = () => {
   const [status, setStatus] = useState(''); // '', 'sending', 'success', 'error'
@@ -31,8 +32,131 @@ const Contact = () => {
   };
 
   return (
-    <Container className="py-5" id="contact">
-      <h2 className="mb-4 text-center">Get in Touch</h2>
+    <Container className="py-5" id="contact" style={{ maxWidth: '1100px' }}>
+      <h2 className="mb-5 text-center heading-xl" style={{ color: 'white', letterSpacing: '-0.02em', fontWeight: 700 }}>Get in <span style={{ color: 'var(--accent-primary, #38bdf8)' }}>Touch</span></h2>
+      
+      <Row className="mb-5 justify-content-center" style={{ gap: '20px 0' }}>
+        <Col md={4}>
+          <div style={{
+            background: 'rgba(15, 23, 42, 0.4)', 
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            borderRadius: '24px',
+            padding: '32px 24px',
+            color: 'white',
+            height: '100%',
+            position: 'relative',
+            overflow: 'hidden',
+          }}>
+            <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '80%', height: '80px', background: 'radial-gradient(ellipse at top, rgba(45, 212, 191, 0.2) 0%, transparent 70%)', zIndex: 0 }}></div>
+            <div style={{
+              background: 'rgba(30, 41, 59, 0.6)',
+              width: '56px',
+              height: '56px',
+              borderRadius: '16px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '40px',
+              border: '1px solid rgba(255, 255, 255, 0.05)',
+              boxShadow: 'inset 0 0 20px rgba(59, 130, 246, 0.1)',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              <FaRegClock size={20} color="#cbd5e1" />
+            </div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <p style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1.5px', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '12px' }}>
+                Reply Rhythm
+              </p>
+              <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#f8fafc', margin: 0, lineHeight: '1.3' }}>
+                Within 24<br/>hours
+              </h3>
+            </div>
+          </div>
+        </Col>
+
+        <Col md={4}>
+          <div style={{
+            background: 'rgba(15, 23, 42, 0.4)', 
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            borderRadius: '24px',
+            padding: '32px 24px',
+            color: 'white',
+            height: '100%',
+            position: 'relative',
+            overflow: 'hidden',
+          }}>
+            <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '80%', height: '80px', background: 'radial-gradient(ellipse at top, rgba(59, 130, 246, 0.2) 0%, transparent 70%)', zIndex: 0 }}></div>
+            <div style={{
+              background: 'rgba(30, 41, 59, 0.6)',
+              width: '56px',
+              height: '56px',
+              borderRadius: '16px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '40px',
+              border: '1px solid rgba(255, 255, 255, 0.05)',
+              boxShadow: 'inset 0 0 20px rgba(59, 130, 246, 0.1)',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              <FaGlobe size={20} color="#cbd5e1" />
+            </div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <p style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1.5px', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '12px' }}>
+                Working Style
+              </p>
+              <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#f8fafc', margin: 0, lineHeight: '1.3' }}>
+                Remote
+              </h3>
+            </div>
+          </div>
+        </Col>
+
+        <Col md={4}>
+          <div style={{
+            background: 'rgba(15, 23, 42, 0.4)', 
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255, 255, 255, 0.05)',
+            borderRadius: '24px',
+            padding: '32px 24px',
+            color: 'white',
+            height: '100%',
+            position: 'relative',
+            overflow: 'hidden',
+          }}>
+            <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', width: '80%', height: '80px', background: 'radial-gradient(ellipse at top, rgba(139, 92, 246, 0.2) 0%, transparent 70%)', zIndex: 0 }}></div>
+            <div style={{
+              background: 'rgba(30, 41, 59, 0.6)',
+              width: '56px',
+              height: '56px',
+              borderRadius: '16px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              marginBottom: '40px',
+              border: '1px solid rgba(255, 255, 255, 0.05)',
+              boxShadow: 'inset 0 0 20px rgba(59, 130, 246, 0.1)',
+              position: 'relative',
+              zIndex: 1
+            }}>
+              <FaEnvelopeOpenText size={20} color="#cbd5e1" />
+            </div>
+            <div style={{ position: 'relative', zIndex: 1 }}>
+              <p style={{ fontSize: '11px', fontWeight: '700', letterSpacing: '1.5px', color: '#94a3b8', textTransform: 'uppercase', marginBottom: '12px' }}>
+                Best First Message
+              </p>
+              <h3 style={{ fontSize: '20px', fontWeight: '600', color: '#f8fafc', margin: 0, lineHeight: '1.3' }}>
+                Goal,<br/>scope,<br/>timeline
+              </h3>
+            </div>
+          </div>
+        </Col>
+      </Row>
+
       <Row className="justify-content-center">
         <Col md={8}>
           <div className="card-handmade">

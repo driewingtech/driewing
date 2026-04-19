@@ -7,7 +7,7 @@ import Magnetic from "./Magnetic";
 import { PopupModal } from "react-calendly";
 import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ onBlogClick, onHomeClick, currentView }) => {
   const [click, setClick] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -55,14 +55,8 @@ const Navbar = () => {
       className={`navbar-wrapper ${scrolled ? "scrolled" : ""} ${hidden ? "hidden" : ""}`}
     >
       <div className="navbar">
-        <div className="logo">
-          <Link
-            to="hero"
-            spy={true}
-            smooth={true}
-            offset={-100}
-            duration={200}
-            onClick={closeMenu}
+        <div className="logo" onClick={() => { onHomeClick(); closeMenu(); window.scrollTo(0, 0); }} style={{ cursor: 'pointer' }}>
+          <div
             style={{
               display: "flex",
               alignItems: "center",
@@ -72,7 +66,7 @@ const Navbar = () => {
           >
             <img src={logoBrand} alt="Driewing Logo" className="logo-img" />
             <span className="logo-wordmark">Driewing</span>
-          </Link>
+          </div>
         </div>
 
         <div className="menu-icon" onClick={handleClick}>
@@ -99,11 +93,12 @@ const Navbar = () => {
           }}
         >
           {[
-            { to: "portfolio", label: "Work" },
-            { to: "testimonials", label: "Proof" },
-            { to: "services", label: "Services" },
-            { to: "about", label: "About" },
-            { to: "contact", label: "Contact" },
+            { to: "home", label: "Home", type: "home" },
+            { to: "portfolio", label: "Work", type: "blog" },
+            { to: "testimonials", label: "Proof", type: "scroll" },
+            { to: "services", label: "Services", type: "scroll" },
+            // { to: "blog", label: "Blog", type: "blog" },
+            { to: "contact", label: "Contact", type: "scroll" },
           ].map((item, index) => (
             <motion.li
               key={index}
@@ -113,16 +108,43 @@ const Navbar = () => {
                 visible: { opacity: 1, y: 0 },
               }}
             >
-              <Link
-                to={item.to}
-                spy={true}
-                smooth={true}
-                offset={-100}
-                duration={200}
-                onClick={closeMenu}
-              >
-                {item.label}
-              </Link>
+              {item.type === "blog" ? (
+                <span
+                  onClick={() => { onBlogClick(); closeMenu(); }}
+                  style={{ cursor: 'pointer', color: currentView === 'blog' ? 'var(--accent-primary)' : 'inherit' }}
+                >
+                  {item.label}
+                </span>
+              ) : item.type === "home" ? (
+                <span
+                  onClick={() => { onHomeClick(); closeMenu(); window.scrollTo(0, 0); }}
+                  style={{ cursor: 'pointer', color: currentView === 'home' ? 'var(--accent-primary)' : 'inherit' }}
+                >
+                  {item.label}
+                </span>
+              ) :
+                // currentView === "home" ? 
+                (
+                  <Link
+                    to={item.to}
+                    spy={true}
+                    smooth={true}
+                    offset={-100}
+                    duration={200}
+                    onClick={closeMenu}
+                  >
+                    {item.label}
+                  </Link>
+                )
+                // : (
+                //   <span
+                //     onClick={() => { onHomeClick(); closeMenu(); }}
+                //     style={{ cursor: 'pointer' }}
+                //   >
+                //     {item.label}
+                //   </span>
+                // )
+              }
             </motion.li>
           ))}
         </motion.ul>

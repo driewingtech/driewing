@@ -86,7 +86,8 @@
   transition: color 0.2s ease;
 }
 
-.nav-item a {
+.nav-item a,
+.nav-item span {
   padding: 7px 14px;
   border-radius: var(--pill-radius);
   transition: all 0.25s ease;
@@ -95,7 +96,9 @@
 }
 
 .nav-item a:hover,
-.nav-item a.active {
+.nav-item a.active,
+.nav-item span:hover,
+.nav-item span.active {
   color: var(--bg-color);
   background-color: var(--accent-primary);
   font-weight: 600;
