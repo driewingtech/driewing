@@ -3,6 +3,7 @@ import priyamImg from "../assets/priyam.png";
 import nftMarketplace from "../assets/nft-marketplace.png";
 import adminDashboard from "../assets/admin-dashboard.png";
 import solanaDapp from "../assets/solana-dapp.png";
+import dexTrading from "../assets/dex-trading-dashboard.png";
 
 export const projects = [
   {
@@ -98,6 +99,25 @@ export const projects = [
     ],
     overview: "Developed Rust-based blockchain components and contract interactions for the Solana ecosystem.",
     approach: "Leveraging Solana's high throughput and low latency to build efficient and secure on-chain logic.",
+    liveUrl: "#"
+  },
+  {
+    id: "dex-defi-trading",
+    title: "DeFi & DEX Trading Platform",
+    category: "Blockchain",
+    tags: ["React", "Web3.js", "Solidity", "Node.js"],
+    imgUrl: dexTrading,
+    client: "TradeFi Protocol",
+    timeline: "8 Weeks · 2024",
+    description: "A high-performance decentralized exchange (DEX) and DeFi trading platform built for seamless token swaps and liquidity provision.",
+    highlights: [
+      "Real-time Trading Charts",
+      "Automated Market Maker (AMM)",
+      "Secure Wallet Integration",
+      "Liquidity Pool Management"
+    ],
+    overview: "We architected and developed a fully decentralized trading platform that enables users to securely swap tokens, provide liquidity, and stake assets. The platform features an intuitive, professional-grade interface tailored for both novice and expert traders.",
+    approach: "Performance and security were our top priorities. We integrated robust smart contracts with a highly responsive React frontend, utilizing Web3.js to ensure lightning-fast transaction updates and accurate real-time market data.",
     liveUrl: "#"
   }
 ];

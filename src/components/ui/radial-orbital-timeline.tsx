@@ -28,8 +28,21 @@ export default function RadialOrbitalTimeline({
     {}
   );
   const [viewMode, setViewMode] = useState<"orbital">("orbital");
-  const [rotationAngle, setRotationAngle] = useState<number>(0);
   const [autoRotate, setAutoRotate] = useState<boolean>(true);
+  
+  // High-performance rotation refs
+  const rotationAngleRef = useRef<number>(0);
+  const requestRef = useRef<number>(0);
+  const autoRotateRef = useRef<boolean>(true);
+  const viewModeRef = useRef<"orbital">("orbital");
+  const expandedItemsRef = useRef<Record<number, boolean>>({});
+
+  useEffect(() => {
+    autoRotateRef.current = autoRotate;
+    viewModeRef.current = viewMode;
+    expandedItemsRef.current = expandedItems;
+  }, [autoRotate, viewMode, expandedItems]);
+
   const [pulseEffect, setPulseEffect] = useState<Record<number, boolean>>({});
   const [centerOffset, setCenterOffset] = useState<{ x: number; y: number }>({
     x: 0,
@@ -83,23 +96,40 @@ export default function RadialOrbitalTimeline({
   };
 
   useEffect(() => {
-    let rotationTimer: NodeJS.Timeout;
-
-    if (autoRotate && viewMode === "orbital") {
-      rotationTimer = setInterval(() => {
-        setRotationAngle((prev) => {
-          const newAngle = (prev + 0.3) % 360;
-          return Number(newAngle.toFixed(3));
-        });
-      }, 50);
-    }
-
-    return () => {
-      if (rotationTimer) {
-        clearInterval(rotationTimer);
+    const updateNodes = () => {
+      if (viewModeRef.current !== "orbital") return;
+      
+      if (autoRotateRef.current) {
+        rotationAngleRef.current = (rotationAngleRef.current + 0.15) % 360;
       }
+
+      const total = timelineData.length;
+      timelineData.forEach((item, index) => {
+        const domNode = nodeRefs.current[item.id];
+        if (!domNode) return;
+
+        const angle = ((index / total) * 360 + rotationAngleRef.current) % 360;
+        const radius = 200;
+        const radian = (angle * Math.PI) / 180;
+
+        const x = radius * Math.cos(radian) + centerOffset.x;
+        const y = radius * Math.sin(radian) + centerOffset.y;
+        const zIndex = Math.round(100 + 50 * Math.cos(radian));
+        const opacity = Math.max(0.4, Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2)));
+
+        const isExpanded = expandedItemsRef.current[item.id];
+        
+        domNode.style.transform = `translate(${x}px, ${y}px)`;
+        domNode.style.zIndex = isExpanded ? "200" : zIndex.toString();
+        domNode.style.opacity = isExpanded ? "1" : opacity.toString();
+      });
+
+      requestRef.current = requestAnimationFrame(updateNodes);
     };
-  }, [autoRotate, viewMode]);
+
+    requestRef.current = requestAnimationFrame(updateNodes);
+    return () => cancelAnimationFrame(requestRef.current);
+  }, [timelineData, centerOffset]);
 
   const centerViewOnNode = (nodeId: number) => {
     if (viewMode !== "orbital" || !nodeRefs.current[nodeId]) return;
@@ -108,25 +138,11 @@ export default function RadialOrbitalTimeline({
     const totalNodes = timelineData.length;
     const targetAngle = (nodeIndex / totalNodes) * 360;
 
-    setRotationAngle(270 - targetAngle);
+    // Smooth easing could be added here in the future
+    rotationAngleRef.current = 270 - targetAngle;
   };
 
-  const calculateNodePosition = (index: number, total: number) => {
-    const angle = ((index / total) * 360 + rotationAngle) % 360;
-    const radius = 200;
-    const radian = (angle * Math.PI) / 180;
-
-    const x = radius * Math.cos(radian) + centerOffset.x;
-    const y = radius * Math.sin(radian) + centerOffset.y;
-
-    const zIndex = Math.round(100 + 50 * Math.cos(radian));
-    const opacity = Math.max(
-      0.4,
-      Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2))
-    );
-
-    return { x, y, angle, zIndex, opacity };
-  };
+  // Removed explicit calculateNodePosition as calculation sits directly in the frame loop now
 
   const getRelatedItems = (itemId: number): number[] => {
     const currentItem = timelineData.find((item) => item.id === itemId);
@@ -179,23 +195,31 @@ export default function RadialOrbitalTimeline({
           <div className="absolute w-96 h-96 rounded-full border border-white/10"></div>
 
           {timelineData.map((item, index) => {
-            const position = calculateNodePosition(index, timelineData.length);
+            const angle = ((index / timelineData.length) * 360 + rotationAngleRef.current) % 360;
+            const radius = 200;
+            const radian = (angle * Math.PI) / 180;
+            
+            const initialX = radius * Math.cos(radian) + centerOffset.x;
+            const initialY = radius * Math.sin(radian) + centerOffset.y;
+            const initialZIndex = Math.round(100 + 50 * Math.cos(radian));
+            const initialOpacity = Math.max(0.4, Math.min(1, 0.4 + 0.6 * ((1 + Math.sin(radian)) / 2)));
+
             const isExpanded = expandedItems[item.id];
             const isRelated = isRelatedToActive(item.id);
             const isPulsing = pulseEffect[item.id];
             const Icon = item.icon;
 
             const nodeStyle = {
-              transform: `translate(${position.x}px, ${position.y}px)`,
-              zIndex: isExpanded ? 200 : position.zIndex,
-              opacity: isExpanded ? 1 : position.opacity,
+              transform: `translate(${initialX}px, ${initialY}px)`,
+              zIndex: isExpanded ? 200 : initialZIndex,
+              opacity: isExpanded ? 1 : initialOpacity,
             };
 
             return (
               <div
                 key={item.id}
                 ref={(el) => { nodeRefs.current[item.id] = el; }}
-                className="absolute transition-all duration-700 cursor-pointer"
+                className="absolute transition-colors cursor-pointer"
                 style={nodeStyle}
                 onClick={(e) => {
                   e.stopPropagation();

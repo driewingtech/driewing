@@ -97,10 +97,9 @@ const Blog = ({ onBack, onContactClick }) => {
 
             <section className="blog-footer-cta">
               <h2>Ready to see it in action?</h2>
-              {
-                (
-                  <button className="btn-primary" onClick={onContactClick}>Contact Us for Demo</button>
-                )}
+              {(
+                <button className="btn-primary" onClick={onContactClick}>Contact Us for Demo</button>
+              )}
               <p style={{ marginTop: '24px', color: 'var(--text-secondary)' }}>
                 Building high-performance digital products for modern brands.
               </p>
@@ -158,7 +157,7 @@ const Blog = ({ onBack, onContactClick }) => {
                 onClick={() => setSelectedId(project.id)}
               >
                 <div className="project-item-img-wrapper">
-                  <img src={project.imgUrl} alt={project.title} className="project-item-img" />
+                  <img src={project.imgUrl} alt={project.title} loading="lazy" decoding="async" className="project-item-img" />
                   <div className="project-item-overlay">
                     <span className="project-item-category">{project.category}</span>
                     <h3 className="project-item-title">{project.title}</h3>
