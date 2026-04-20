@@ -138,10 +138,7 @@ const Hero = () => {
       <div className="floating-shape shape-2" />
       <div className="floating-shape shape-3" />
 
-      <div
-        ref={blobRef}
-        className="hero-interactive-blob"
-      ></div>
+      <div ref={blobRef} className="hero-interactive-blob"></div>
       <div className="container hero-container">
         <div className="hero-text-side">
           {/* <motion.span
@@ -225,6 +222,9 @@ const Hero = () => {
               className="hero-main-img"
               fetchPriority="high"
               decoding="async"
+              width="600"
+              height="600"
+              loading="eager"
             />
 
             {/* Decorative Elements */}

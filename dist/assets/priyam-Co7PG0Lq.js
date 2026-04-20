@@ -1,0 +1,1 @@
+var a="/assets/priyam-FJtyOVRP.webp";export{a as t};

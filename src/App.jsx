@@ -54,22 +54,10 @@ function App() {
           {view === "home" ? (
             <>
               <Hero />
-              {/* <Explore /> */}
-              <LazySection minHeight={700}>
-                <Testimonials />
-              </LazySection>
-              {/* <LazySection minHeight={900}>
-                <RadialOrbitalTimelineDemo />
-              </LazySection> */}
-              <LazySection minHeight={760}>
-                <Features />
-              </LazySection>
-              <LazySection minHeight={900}>
-                <About />
-              </LazySection>
-              <LazySection minHeight={900}>
-                <Contact />
-              </LazySection>
+              <Testimonials />
+              <Features />
+              <About />
+              <Contact />
             </>
           ) : (
             <Blog onContactClick={scrollToContact} />

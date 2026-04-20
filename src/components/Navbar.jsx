@@ -54,7 +54,15 @@ const Navbar = ({ onBlogClick, onHomeClick, currentView }) => {
       className={`navbar-wrapper ${scrolled ? "scrolled" : ""} ${hidden ? "hidden" : ""}`}
     >
       <div className="navbar">
-        <div className="logo" onClick={() => { onHomeClick(); closeMenu(); window.scrollTo(0, 0); }} style={{ cursor: 'pointer' }}>
+        <div
+          className="logo"
+          onClick={() => {
+            onHomeClick();
+            closeMenu();
+            window.scrollTo(0, 0);
+          }}
+          style={{ cursor: "pointer" }}
+        >
           <div
             style={{
               display: "flex",
@@ -63,7 +71,13 @@ const Navbar = ({ onBlogClick, onHomeClick, currentView }) => {
               textDecoration: "none",
             }}
           >
-            <img src={logoBrand} alt="Driewing Logo" className="logo-img" />
+            <img
+              src={logoBrand}
+              alt="Driewing Logo"
+              className="logo-img"
+              width="40"
+              height="40"
+            />
             <span className="logo-wordmark">Driewing</span>
           </div>
         </div>
@@ -82,47 +96,54 @@ const Navbar = ({ onBlogClick, onHomeClick, currentView }) => {
             { to: "portfolio", label: "Work", type: "blog" },
             { to: "testimonials", label: "Proof", type: "scroll" },
             { to: "services", label: "Services", type: "scroll" },
-            // { to: "blog", label: "Blog", type: "blog" },
             { to: "contact", label: "Contact", type: "scroll" },
           ].map((item, index) => (
             <li key={index} className="nav-item">
               {item.type === "blog" ? (
                 <span
-                  onClick={() => { onBlogClick(); closeMenu(); }}
-                  style={{ cursor: 'pointer', color: currentView === 'blog' ? 'var(--accent-primary)' : 'inherit' }}
+                  onClick={() => {
+                    onBlogClick();
+                    closeMenu();
+                  }}
+                  style={{
+                    cursor: "pointer",
+                    color:
+                      currentView === "blog"
+                        ? "var(--accent-primary)"
+                        : "inherit",
+                  }}
                 >
                   {item.label}
                 </span>
               ) : item.type === "home" ? (
                 <span
-                  onClick={() => { onHomeClick(); closeMenu(); window.scrollTo(0, 0); }}
-                  style={{ cursor: 'pointer', color: currentView === 'home' ? 'var(--accent-primary)' : 'inherit' }}
+                  onClick={() => {
+                    onHomeClick();
+                    closeMenu();
+                    window.scrollTo(0, 0);
+                  }}
+                  style={{
+                    cursor: "pointer",
+                    color:
+                      currentView === "home"
+                        ? "var(--accent-primary)"
+                        : "inherit",
+                  }}
                 >
                   {item.label}
                 </span>
-              ) :
-                // currentView === "home" ? 
-                (
-                  <Link
-                    to={item.to}
-                    spy={true}
-                    smooth={true}
-                    offset={-100}
-                    duration={200}
-                    onClick={closeMenu}
-                  >
-                    {item.label}
-                  </Link>
-                )
-                // : (
-                //   <span
-                //     onClick={() => { onHomeClick(); closeMenu(); }}
-                //     style={{ cursor: 'pointer' }}
-                //   >
-                //     {item.label}
-                //   </span>
-                // )
-              }
+              ) : (
+                <Link
+                  to={item.to}
+                  spy={true}
+                  smooth={true}
+                  offset={-100}
+                  duration={200}
+                  onClick={closeMenu}
+                >
+                  {item.label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>

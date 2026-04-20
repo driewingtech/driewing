@@ -1,7 +1,17 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaArrowLeft } from "react-icons/fa";
-import { SiReact, SiVercel, SiNodedotjs, SiMongodb, SiNextdotjs, SiEthereum, SiSolana, SiRust, SiExpress } from "react-icons/si";
+import {
+  SiReact,
+  SiVercel,
+  SiNodedotjs,
+  SiMongodb,
+  SiNextdotjs,
+  SiEthereum,
+  SiSolana,
+  SiRust,
+  SiExpress,
+} from "react-icons/si";
 import { projects } from "../data/projects";
 import "./Blog.css";
 
@@ -25,20 +35,31 @@ const Blog = ({ onContactClick }) => {
     window.scrollTo(0, 0);
   }, [selectedId]);
 
-  const selectedProject = projects.find(p => p.id === selectedId);
+  const selectedProject = projects.find((p) => p.id === selectedId);
 
   const renderIcon = (tag) => {
     switch (tag.toLowerCase()) {
-      case 'react.js': case 'react': return <SiReact />;
-      case 'vercel': return <SiVercel />;
-      case 'node.js': return <SiNodedotjs />;
-      case 'mongodb': return <SiMongodb />;
-      case 'next.js': return <SiNextdotjs />;
-      case 'ethereum': return <SiEthereum />;
-      case 'solana': return <SiSolana />;
-      case 'rust': return <SiRust />;
-      case 'express': return <SiExpress />;
-      default: return null;
+      case "react.js":
+      case "react":
+        return <SiReact />;
+      case "vercel":
+        return <SiVercel />;
+      case "node.js":
+        return <SiNodedotjs />;
+      case "mongodb":
+        return <SiMongodb />;
+      case "next.js":
+        return <SiNextdotjs />;
+      case "ethereum":
+        return <SiEthereum />;
+      case "solana":
+        return <SiSolana />;
+      case "rust":
+        return <SiRust />;
+      case "express":
+        return <SiExpress />;
+      default:
+        return null;
     }
   };
 
@@ -46,7 +67,11 @@ const Blog = ({ onContactClick }) => {
     return (
       <div className="blog-page">
         <div className="container">
-          <button onClick={() => setSelectedId(null)} className="btn-ghost" style={{ marginBottom: '32px', gap: '8px' }}>
+          <button
+            onClick={() => setSelectedId(null)}
+            className="btn-ghost"
+            style={{ marginBottom: "32px", gap: "8px" }}
+          >
             <FaArrowLeft /> Back to List
           </button>
 
@@ -68,9 +93,7 @@ const Blog = ({ onContactClick }) => {
 
             <section className="blog-content-section">
               <span className="section-label">Overview</span>
-              <p className="blog-overview-text">
-                {selectedProject.overview}
-              </p>
+              <p className="blog-overview-text">{selectedProject.overview}</p>
             </section>
 
             <section className="blog-content-section">
@@ -78,7 +101,7 @@ const Blog = ({ onContactClick }) => {
               <div className="feature-grid">
                 {selectedProject.highlights.map((h, i) => (
                   <div key={i} className="feature-card">
-                    <h4>{h.split(' ')[0]}</h4>
+                    <h4>{h.split(" ")[0]}</h4>
                     <p>{h}</p>
                   </div>
                 ))}
@@ -88,7 +111,7 @@ const Blog = ({ onContactClick }) => {
             <section className="blog-content-section">
               <span className="section-label">Tech Stack</span>
               <div className="tech-pill-container">
-                {selectedProject.tags.map(tag => (
+                {selectedProject.tags.map((tag) => (
                   <span key={tag} className="tech-pill">
                     {renderIcon(tag)} {tag}
                   </span>
@@ -98,17 +121,17 @@ const Blog = ({ onContactClick }) => {
 
             <section className="blog-content-section">
               <span className="section-label">Our Approach</span>
-              <p className="blog-overview-text">
-                {selectedProject.approach}
-              </p>
+              <p className="blog-overview-text">{selectedProject.approach}</p>
             </section>
 
             <section className="blog-footer-cta">
               <h2>Ready to see it in action?</h2>
-              {(
-                <button className="btn-primary" onClick={onContactClick}>Contact Us for Demo</button>
-              )}
-              <p style={{ marginTop: '24px', color: 'var(--text-secondary)' }}>
+              {
+                <button className="btn-primary" onClick={onContactClick}>
+                  Contact Us for Demo
+                </button>
+              }
+              <p style={{ marginTop: "24px", color: "var(--text-secondary)" }}>
                 Building high-performance digital products for modern brands.
               </p>
             </section>
@@ -127,7 +150,8 @@ const Blog = ({ onContactClick }) => {
             animate={{ opacity: 1, y: 0 }}
             className="heading-xl"
           >
-            Project Index<span style={{ color: 'var(--accent-primary)' }}>.</span>
+            Project Index
+            <span style={{ color: "var(--accent-primary)" }}>.</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -135,7 +159,8 @@ const Blog = ({ onContactClick }) => {
             transition={{ delay: 0.1 }}
             className="text-muted"
           >
-            A documented history of digital architecture, product engineering, and visual systems.
+            A documented history of digital architecture, product engineering,
+            and visual systems.
           </motion.p>
         </header>
 
@@ -165,19 +190,35 @@ const Blog = ({ onContactClick }) => {
                 onClick={() => setSelectedId(project.id)}
               >
                 <div className="project-item-img-wrapper">
-                  <img src={project.imgUrl} alt={project.title} loading="lazy" decoding="async" className="project-item-img" />
+                  <img
+                    src={project.imgUrl}
+                    alt={project.title}
+                    loading="lazy"
+                    decoding="async"
+                    className="project-item-img"
+                    width="400"
+                    height="300"
+                  />
                   <div className="project-item-overlay">
-                    <span className="project-item-category">{project.category}</span>
+                    <span className="project-item-category">
+                      {project.category}
+                    </span>
                     <h3 className="project-item-title">{project.title}</h3>
                   </div>
                 </div>
                 <div className="project-item-content">
                   <p className="project-item-desc">{project.description}</p>
                   <div className="project-item-tags">
-                    {project.tags.slice(0, 3).map(tag => (
-                      <span key={tag} className="project-mini-tag">{tag}</span>
+                    {project.tags.slice(0, 3).map((tag) => (
+                      <span key={tag} className="project-mini-tag">
+                        {tag}
+                      </span>
                     ))}
-                    {project.tags.length > 3 && <span className="project-mini-tag">+{project.tags.length - 3}</span>}
+                    {project.tags.length > 3 && (
+                      <span className="project-mini-tag">
+                        +{project.tags.length - 3}
+                      </span>
+                    )}
                   </div>
                 </div>
               </motion.div>
